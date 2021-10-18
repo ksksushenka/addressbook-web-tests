@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace addressbook_web_tests
+namespace WebAddressbookTests
 {
     public class Tests
     {
