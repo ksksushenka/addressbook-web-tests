@@ -3,9 +3,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -15,9 +12,6 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToAddNewContactPage();
             ContactData group = new ContactData("Test FN", "Test LN");
             group.MiddleName = "Test MN";
             group.Nickname = "Test Nickname";
@@ -37,14 +31,42 @@ namespace WebAddressbookTests
             group.Byear = "1990";
             group.Aday = "15";
             group.Amonth = "September";
-            group.Ayear = "2020";
+            group.Ayear = "2021";
             group.Address2 = "Test Address2";
             group.Phone2 = "Test Phone2";
             group.Notes = "Test Notes";
-            FillContactData(group);
-            SubmitContactCreation();
-            ReturnToHomePage();
-            LogOut();
+
+            app.Contacts.Create(group);
+        }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData group = new ContactData("", "");
+            group.MiddleName = "";
+            group.Nickname = "";
+            group.Title = "";
+            group.Company = "";
+            group.Address = "";
+            group.Home = "";
+            group.Mobile = "";
+            group.Work = "";
+            group.Fax = "";
+            group.Email = "";
+            group.Email2 = "";
+            group.Email3 = "";
+            group.Homepage = "";
+            group.Bday = "";
+            group.Bmonth = "-";
+            group.Byear = "";
+            group.Aday = "";
+            group.Amonth = "-";
+            group.Ayear = "";
+            group.Address2 = "";
+            group.Phone2 = "";
+            group.Notes = "";
+
+            app.Contacts.Create(group);
         }
     }
 }
