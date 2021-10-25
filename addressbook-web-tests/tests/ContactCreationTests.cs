@@ -12,61 +12,61 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData group = new ContactData("Test FN", "Test LN");
-            group.MiddleName = "Test MN";
-            group.Nickname = "Test Nickname";
-            group.Title = "Test Title";
-            group.Company = "Test Company";
-            group.Address = "Test Address";
-            group.Home = "Test Home";
-            group.Mobile = "Test Mobile";
-            group.Work = "Test Work";
-            group.Fax = "Test Fax";
-            group.Email = "Test Email";
-            group.Email2 = "Test Email2";
-            group.Email3 = "Test Email3";
-            group.Homepage = "Test Homepage";
-            group.Bday = "13";
-            group.Bmonth = "September";
-            group.Byear = "1990";
-            group.Aday = "15";
-            group.Amonth = "September";
-            group.Ayear = "2021";
-            group.Address2 = "Test Address2";
-            group.Phone2 = "Test Phone2";
-            group.Notes = "Test Notes";
+            ContactData contact = new ContactData("Test FN", "Test LN");
+            contact.MiddleName = "Test MN";
+            contact.Nickname = "Test Nickname";
+            contact.Title = "Test Title";
+            contact.Company = "Test Company";
+            contact.Address = "Test Address";
+            contact.Home = "Test Home";
+            contact.Mobile = "Test Mobile";
+            contact.Work = "Test Work";
+            contact.Fax = "Test Fax";
+            contact.Email = "Test Email";
+            contact.Email2 = "Test Email2";
+            contact.Email3 = "Test Email3";
+            contact.Homepage = "Test Homepage";
+            contact.Bday = "13";
+            contact.Bmonth = "September";
+            contact.Byear = "1990";
+            contact.Aday = "15";
+            contact.Amonth = "September";
+            contact.Ayear = "2021";
+            contact.Address2 = "Test Address2";
+            contact.Phone2 = "Test Phone2";
+            contact.Notes = "Test Notes";
 
-            app.Contacts.Create(group);
+            app.Contacts.Create(contact);
         }
 
         [Test]
         public void EmptyContactCreationTest()
         {
-            ContactData group = new ContactData("", "");
-            group.MiddleName = "";
-            group.Nickname = "";
-            group.Title = "";
-            group.Company = "";
-            group.Address = "";
-            group.Home = "";
-            group.Mobile = "";
-            group.Work = "";
-            group.Fax = "";
-            group.Email = "";
-            group.Email2 = "";
-            group.Email3 = "";
-            group.Homepage = "";
-            group.Bday = "";
-            group.Bmonth = "-";
-            group.Byear = "";
-            group.Aday = "";
-            group.Amonth = "-";
-            group.Ayear = "";
-            group.Address2 = "";
-            group.Phone2 = "";
-            group.Notes = "";
+            ContactData contact = new ContactData("", "");
+            contact.MiddleName = "";
+            contact.Nickname = "";
+            contact.Title = "";
+            contact.Company = "";
+            contact.Address = "";
+            contact.Home = "";
+            contact.Mobile = "";
+            contact.Work = "";
+            contact.Fax = "";
+            contact.Email = "";
+            contact.Email2 = "";
+            contact.Email3 = "";
+            contact.Homepage = "";
+            contact.Bday = "";
+            contact.Bmonth = "-";
+            contact.Byear = "";
+            contact.Aday = "";
+            contact.Amonth = "-";
+            contact.Ayear = "";
+            contact.Address2 = "";
+            contact.Phone2 = "";
+            contact.Notes = "";
 
-            app.Contacts.Create(group);
+            app.Contacts.Create(contact);
         }
     }
 }

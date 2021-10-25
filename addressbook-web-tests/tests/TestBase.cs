@@ -25,18 +25,5 @@ namespace WebAddressbookTests
 
             app.Stop();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
