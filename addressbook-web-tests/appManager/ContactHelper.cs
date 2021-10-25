@@ -16,15 +16,15 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(int x)
         {
-            SelectContact(1);
+            SelectContact(x);
             RemoveContact();
             return this;
         }
-        public ContactHelper Update(ContactData contact)
+        public ContactHelper Modify(ContactData newContactData)
         {
             EditContact();
-            FillContactData(contact);
-            UpdateContact();
+            FillContactData(newContactData);
+            ModifyContact();
             ReturnToHomePage();
             return this;
         }
@@ -112,7 +112,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
         }
-        public ContactHelper UpdateContact()
+        public ContactHelper ModifyContact()
         {
             driver.FindElement(By.CssSelector("input[name=\"update\"]")).Click();
             return this;

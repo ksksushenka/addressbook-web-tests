@@ -17,18 +17,18 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int p)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(1);
+            SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
         }
-        public GroupHelper Update(GroupData group)
+        public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(1);
-            EditGroup();
-            FillGroupPage(group);
-            UpdateGroup();
+            SelectGroup(p);
+            InitGroupModification();
+            FillGroupPage(newData);
+            SubmitGroupModification();
             ReturnToGroupsPage();
             return this;
         }
@@ -77,12 +77,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("delete")).Click();
             return this;
         }
-        public GroupHelper EditGroup()
+        public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
             return this;
         }
-        public GroupHelper UpdateGroup()
+        public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
