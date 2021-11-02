@@ -21,7 +21,23 @@ namespace WebAddressbookTests
             this.manager = manager;
             driver = manager.Driver;
         }
-        private bool IsElementPresent(By by)
+        public void Type(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+        }
+        public void Type2(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Click();
+                new SelectElement(driver.FindElement(locator)).SelectByText(text);
+            }
+        }
+        public bool IsElementPresent(By by)
         {
             try
             {
@@ -34,39 +50,39 @@ namespace WebAddressbookTests
             }
         }
 
-        private bool IsAlertPresent()
-        {
-            try
-            {
-                driver.SwitchTo().Alert();
-                return true;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
-        }
+        //private bool IsAlertPresent()
+        //{
+        //    try
+        //    {
+        //        driver.SwitchTo().Alert();
+        //        return true;
+        //    }
+        //    catch (NoAlertPresentException)
+        //    {
+        //        return false;
+        //    }
+        //}
 
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                string alertText = alert.Text;
-                if (acceptNextAlert)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                return alertText;
-            }
-            finally
-            {
-                acceptNextAlert = true;
-            }
-        }
+        //private string CloseAlertAndGetItsText()
+        //{
+        //    try
+        //    {
+        //        IAlert alert = driver.SwitchTo().Alert();
+        //        string alertText = alert.Text;
+        //        if (acceptNextAlert)
+        //        {
+        //            alert.Accept();
+        //        }
+        //        else
+        //        {
+        //            alert.Dismiss();
+        //        }
+        //        return alertText;
+        //    }
+        //    finally
+        //    {
+        //        acceptNextAlert = true;
+        //    }
+        //}
     }
 }
