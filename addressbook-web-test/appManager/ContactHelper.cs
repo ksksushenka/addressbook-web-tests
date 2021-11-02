@@ -11,17 +11,29 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(ApplicationManager manager) : base(manager)
+        public string baseURL;
+        public ContactHelper(ApplicationManager manager, string baseURL) : base(manager)
         {
+            this.baseURL = baseURL;
         }
         public ContactHelper Remove(int x)
         {
+            if (driver.Url == baseURL + "/addressbook/"
+                && !IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new ContactData("firstname", "lastname"));
+            }
             SelectContact(x);
             RemoveContact();
             return this;
         }
         public ContactHelper Modify(ContactData newContactData)
         {
+            if (driver.Url == baseURL + "/addressbook/"
+                && ! IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new ContactData("firstname", "lastname"));
+            }
             EditContact();
             FillContactData(newContactData);
             ModifyContact();

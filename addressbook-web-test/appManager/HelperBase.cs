@@ -13,8 +13,6 @@ namespace WebAddressbookTests
     {
         protected IWebDriver driver;
         protected ApplicationManager manager;
-        //private StringBuilder verificationErrors;
-        private bool acceptNextAlert = true;
 
         public HelperBase(ApplicationManager manager)
         {
