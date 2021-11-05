@@ -12,6 +12,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
+            app.Contacts.CreateContactIfElementPresent();
+
             ContactData newContactData = new ContactData("Test FN upd", "Test LN upd");
             newContactData.MiddleName = null;
             newContactData.Nickname = null;

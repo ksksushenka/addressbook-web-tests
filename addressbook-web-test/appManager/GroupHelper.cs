@@ -12,20 +12,12 @@ namespace WebAddressbookTests
     public class GroupHelper : HelperBase
     {
         public string baseURL;
-        //public GroupData group;
         public GroupHelper(ApplicationManager manager, string baseURL) : base(manager)
         {
             this.baseURL = baseURL;
         }
         public GroupHelper Remove(int p)
         {
-            manager.Navigator.GoToGroupsPage();
-
-            if (driver.Url == baseURL + "/addressbook/group.php"
-               && ! IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new GroupData("test name", "test header", "test footer"));
-            }
             manager.Navigator.GoToGroupsPage();
             SelectGroup(p);
             RemoveGroup();
@@ -35,12 +27,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-
-            if (driver.Url == baseURL + "/addressbook/group.php"
-               && ! IsElementPresent(By.Name("selected[]")))
-            { 
-                Create(newData);
-            }
             SelectGroup(p);
             InitGroupModification();
             FillGroupPage(newData);
@@ -98,6 +84,15 @@ namespace WebAddressbookTests
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+        public GroupHelper CreateGroupIfElementPresent()
+        {
+            if (driver.Url == baseURL + "/addressbook/group.php"
+               && !IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new GroupData("test name", "test header", "test footer"));
+            }
             return this;
         }
     }

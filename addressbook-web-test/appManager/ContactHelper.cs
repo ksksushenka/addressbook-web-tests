@@ -18,22 +18,12 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(int x)
         {
-            if (driver.Url == baseURL + "/addressbook/"
-                && !IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new ContactData("firstname", "lastname"));
-            }
             SelectContact(x);
             RemoveContact();
             return this;
         }
         public ContactHelper Modify(ContactData newContactData)
         {
-            if (driver.Url == baseURL + "/addressbook/"
-                && ! IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new ContactData("firstname", "lastname"));
-            }
             EditContact();
             FillContactData(newContactData);
             ModifyContact();
@@ -107,5 +97,15 @@ namespace WebAddressbookTests
             driver.SwitchTo().Alert().Accept();
             return this;
         }
+        public ContactHelper CreateContactIfElementPresent()
+        {
+            if (driver.Url == baseURL + "/addressbook/"
+               && !IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new ContactData("firstname", "lastname"));
+            }
+            return this;
+        }
     }
 }
+
