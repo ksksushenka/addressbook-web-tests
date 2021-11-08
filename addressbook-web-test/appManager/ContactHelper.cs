@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -16,7 +17,20 @@ namespace WebAddressbookTests
         {
             this.baseURL = baseURL;
         }
-        public ContactHelper Remove(int x)
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            Thread.Sleep(200);
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=\"entry\"]"));
+            foreach (IWebElement element in elements)
+            {
+                var td = element.FindElements(By.CssSelector("td"));
+                contacts.Add(new ContactData(td[2].Text, td[1].Text));
+            }
+            return contacts;
+        }
+            public ContactHelper Remove(int x)
         {
             SelectContact(x);
             RemoveContact();
@@ -88,7 +102,7 @@ namespace WebAddressbookTests
         }
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+1) +"]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+2) +"]/td/input")).Click();
             return this;
         }
         public ContactHelper RemoveContact()
