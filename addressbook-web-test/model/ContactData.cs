@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace WebAddressbookTests
 {
@@ -11,6 +12,8 @@ namespace WebAddressbookTests
     {
         public string allPhones;
         public string allEmails;
+        public string view;
+
         public ContactData(string firstname, string lastname)
         {
             FirstName = firstname;
@@ -127,6 +130,141 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
+        public string View
+        {
+            get
+            {
+                if (view != null)
+                {
+                    return view;
+                }
+                else
+                {
+                    return (NameBlock() + PhoneBlock() + EmailBlock() + DateBlock() + SecondaryBlock()).Trim();
+                }
+            }
+            set
+            {
+                view = value;
+            }
+        }
+        private string NameBlock()
+        {
+            string namestr = "";
+            if (!String.IsNullOrEmpty(FirstName) || !String.IsNullOrEmpty(MiddleName) || !String.IsNullOrEmpty(LastName))
+            {
+                string name = "";
+                if (!String.IsNullOrEmpty(FirstName))
+                    name += FirstName + " ";
+                if (!String.IsNullOrEmpty(MiddleName))
+                    name += MiddleName + " ";
+                if (!String.IsNullOrEmpty(LastName))
+                    name += LastName;
+                namestr = name.Trim() + "\r\n";
+            }
+            if (!String.IsNullOrEmpty(Nickname))
+                namestr += Nickname + "\r\n";
+            if (!String.IsNullOrEmpty(Title))
+                namestr += Title + "\r\n";
+            if (!String.IsNullOrEmpty(Company))
+                namestr += Company + "\r\n";
+            if (!String.IsNullOrEmpty(Address))
+                namestr += Address + "\r\n";
+            if (namestr != "")
+                return namestr + "\r\n";
+            return namestr;
+        }
+        private string PhoneBlock()
+        {
+            string phonestr = "";
+            if (!String.IsNullOrEmpty(Home))
+                phonestr += "H: " + Home + "\r\n";
+            if (!String.IsNullOrEmpty(Mobile))
+                phonestr += "M: " + Mobile + "\r\n";
+            if (!String.IsNullOrEmpty(Work))
+                phonestr += "W: " + Work + "\r\n";
+            if (!String.IsNullOrEmpty(Fax))
+                phonestr += "F: " + Fax + "\r\n";
+            if (phonestr != "")
+                return phonestr + "\r\n";
+            return phonestr;
+        }
+        private string EmailBlock()
+        {
+            string emailstr = "";
+            if (!String.IsNullOrEmpty(Email))
+                emailstr += Email + "\r\n";
+            if (!String.IsNullOrEmpty(Email2))
+                emailstr += Email2 + "\r\n";
+            if (!String.IsNullOrEmpty(Email3))
+                emailstr += Email3 + "\r\n";
+            if (!String.IsNullOrEmpty(Homepage))
+                emailstr += "Homepage:\r\n" + Homepage + "\r\n";
+            if (emailstr != "")
+                return emailstr + "\r\n";
+            return emailstr;
+        }
+        private string DateBlock()
+        {
+            string datestr = "";
+            if ((!String.IsNullOrEmpty(Bday) && Bday != "-") || (!String.IsNullOrEmpty(Bmonth) && Bmonth != "-") || !String.IsNullOrEmpty(Byear))
+            {
+                string dateData = "";
+                dateData += "Birthday ";
+                if (!String.IsNullOrEmpty(Bday) && Bday != "-")
+                    dateData += Bday + ". ";
+                if (!String.IsNullOrEmpty(Bmonth) && Bmonth != "-")
+                    dateData += Bmonth + " ";
+                if (!String.IsNullOrEmpty(Byear))
+                {
+                    dateData += Byear + " (" + CalculateYears(Bday, Bmonth, Byear) + ")";
+                }
+                datestr += dateData.Trim() + "\r\n";
+            }
+            if ((!String.IsNullOrEmpty(Aday) && Aday != "-") || (!String.IsNullOrEmpty(Amonth) && Amonth != "-") || !String.IsNullOrEmpty(Ayear))
+            {
+                string dateData = "";
+                dateData += "Anniversary ";
+                if (!String.IsNullOrEmpty(Aday) && Aday != "-")
+                    dateData += Aday + ". ";
+                if (!String.IsNullOrEmpty(Amonth) && Amonth != "-")
+                    dateData += Amonth + " ";
+                if (!String.IsNullOrEmpty(Ayear))
+                {
+                    dateData += Ayear + " (" + CalculateYears(Aday, Amonth, Ayear) + ")";
+                }
+                datestr += dateData.Trim() + "\r\n";
+            }
+            if (datestr != "")
+                return datestr + "\r\n";
+            return datestr;
+        }
+        private string SecondaryBlock()
+        {
+            string secondarystr = "";
+            if (!String.IsNullOrEmpty(Address2))
+                secondarystr += Address2 + "\r\n\r\n";
+            if (!String.IsNullOrEmpty(Phone2))
+                secondarystr += "P: " + Phone2 + "\r\n\r\n";
+            if (!String.IsNullOrEmpty(Notes))
+                secondarystr += Notes;
+            return secondarystr.Trim();
+        }
+        private int CalculateYears(string day, string month, string year)
+        {
+            if (String.IsNullOrEmpty(day) || day == "-")
+                day = "1";
+            if (String.IsNullOrEmpty(month) || month == "-")
+                month = "January";
+            DateTime dt = DateTime.ParseExact(day + " " + month + " " + year, "d MMMM yyyy", CultureInfo.InvariantCulture);
+            int YearsPassed = DateTime.Now.Year - dt.Year;
+            if (DateTime.Now.Month < dt.Month || (DateTime.Now.Month == dt.Month && DateTime.Now.Day < dt.Day))
+            {
+                YearsPassed--;
+            }
+            return YearsPassed;
+        }
     }
 }
+
 
