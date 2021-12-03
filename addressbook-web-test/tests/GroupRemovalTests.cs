@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             app.Navigator.GoToGroupsPage();
-            app.Groups.CreateGroupIfElementPresent();
+            app.Groups.CreateGroupIfElementNotPresent();
 
             List<GroupData> oldGroups = GroupData.GetAll();
             GroupData toBeRemoved = oldGroups[0];

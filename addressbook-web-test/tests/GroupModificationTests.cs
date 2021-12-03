@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         public void GroupModificationTest()
         {
             app.Navigator.GoToGroupsPage();
-            app.Groups.CreateGroupIfElementPresent();
+            app.Groups.CreateGroupIfElementNotPresent();
 
             GroupData newData = new GroupData("test name upd");
             newData.Header = null;

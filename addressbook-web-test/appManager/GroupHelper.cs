@@ -129,7 +129,7 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
-        public GroupHelper CreateGroupIfElementPresent()
+        public GroupHelper CreateGroupIfElementNotPresent()
         {
             if (driver.Url == baseURL + "/addressbook/group.php"
                && !IsElementPresent(By.Name("selected[]")))

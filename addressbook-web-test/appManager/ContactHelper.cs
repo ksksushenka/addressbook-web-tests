@@ -38,15 +38,34 @@ namespace WebAddressbookTests
             }
             return new List<ContactData>(contactCache);
         }
+        public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+        public ContactHelper RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            CommitRemovingContactFromGroup();
+            return this;
+        }
         public ContactHelper Remove(int x)
         {
-            SelectContact(x);
+            SelectContactForEdit(x);
             RemoveContact();
             return this;
         }
         public ContactHelper Remove(ContactData contact)
         {
-            SelectContact(contact.Id);
+            SelectContactForEdit(contact.Id);
             RemoveContact();
             return this;
         }
@@ -143,12 +162,12 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }
-        public ContactHelper SelectContact(int index)
+        public ContactHelper SelectContactForEdit(int index)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index + 2) +"]/td/input")).Click();
             return this;
         }
-        public ContactHelper SelectContact(string id)
+        public ContactHelper SelectContactForEdit(string id)
         {
             driver.FindElement(By.Id(id)).Click();
             return this;
@@ -161,7 +180,7 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }
-        public ContactHelper CreateContactIfElementPresent()
+        public ContactHelper CreateContactIfElementNotPresent()
         {
             if (driver.Url == baseURL + "/addressbook/"
                && !IsElementPresent(By.Name("selected[]")))
@@ -265,7 +284,36 @@ namespace WebAddressbookTests
         {
             return driver.FindElement(By.Id("content")).Text;
         }
-
+        public ContactHelper ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+            return this;
+        }
+        public ContactHelper SelectContact(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+            return this;
+        }
+        public ContactHelper SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+            return this;
+        }
+        public ContactHelper CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+            return this;
+        }
+        public ContactHelper SelectGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+            return this;
+        }
+        public ContactHelper CommitRemovingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+            return this;
+        }
     }
 }
 
